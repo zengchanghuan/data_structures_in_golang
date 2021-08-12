@@ -70,12 +70,12 @@ func (l *linkedList) GetElemWithIndex(index int) *node {
 	}
 
 	//从链表头指值出发，顺着链域next逐个往下搜索
-	current := l.head
+	cursor := l.head
 	var i = 0
 	for ; i < index; i++ {
-		current = current.next
+		cursor = cursor.next
 	}
-	return current
+	return cursor
 }
 
 //查找，按值查找，根据数据获取该数据所在的地址
@@ -95,37 +95,28 @@ func (l *linkedList) FindWithData(data int) *node {
 		current = current.next
 	}
 	return current
-	/*
-		for {
-			if data != cur.data {
-				cur = cur.next
-			}
-			return cur
-		}
-		return nil
-	*/
+
 }
 
 //查找，按值查找返回位置序号
-func (l *linkedList) FindData(data int) int {
+func (l *linkedList) LocateElem(data int) int {
 	if l.head == nil || l.length == 0 {
 		return -1
 	}
 
-	current := l.head
+	cursor := l.head
 	index := 1
-	for current.data != data {
-		current = current.next
+	//如果没有找到，cursor.next 为空，故下面cursor不空判断不可少
+	for cursor != nil && cursor.data != data {
+		cursor = cursor.next
 		index++
 	}
-	return index
-	//
-	//if index <= l.length {
-	//	return index
-	//} else {
-	//	return 0
-	//}
 
+	if cursor == nil {
+		return -1
+	} else {
+		return index
+	}
 }
 
 //按值删除
@@ -223,10 +214,14 @@ func main() {
 		if ele2 != nil {
 			fmt.Println(ele2.data)
 		}
-	*/
+
 	index := mylist.FindData(7)
 	fmt.Println(index)
 
-	index2 := mylist.FindData(4)
+
+	*/
+	index2 := mylist.LocateElem(90)
 	fmt.Println(index2)
+	index3 := mylist.LocateElem(70)
+	fmt.Println(index3)
 }
