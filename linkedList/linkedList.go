@@ -253,9 +253,13 @@ func main() {
 
 	//mylist.InsertBefore(3,54)
 	//mylist.DeleteIndex(1)
-	mylist.DeleteWithValue(3)
+	//mylist.DeleteWithValue(3)
 	mylist.printListData()
-	mylist.DeleteWithValue(7)
+	//mylist.DeleteWithValue(7)
+	mylist.printListData()
+
+	d := mylist.GetElemWithIndex(3)
+	mylist.DeleteNode(d)
 	mylist.printListData()
 
 	/*
