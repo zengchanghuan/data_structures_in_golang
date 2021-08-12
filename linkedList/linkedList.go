@@ -48,7 +48,6 @@ func (l *linkedList) Destroy() {
 	l.length = 0
 	l.head = nil
 
-
 }
 
 //表长
@@ -97,35 +96,36 @@ func (l *linkedList) FindWithData(data int) *node {
 	}
 	return current
 	/*
-	for {
-		if data != cur.data {
-			cur = cur.next
+		for {
+			if data != cur.data {
+				cur = cur.next
+			}
+			return cur
 		}
-		return cur
-	}
-	return nil
+		return nil
 	*/
 }
 
-//查找，按值查找，根据数据获取该数据所在的位置序号
+//查找，按值查找返回位置序号
 func (l *linkedList) FindData(data int) int {
-	if l.length == 0 {
+	if l.head == nil || l.length == 0 {
 		return -1
 	}
 
-	cur := l.head.next
+	current := l.head
 	index := 1
-	for {
-		if data != cur.data {
-			cur = cur.next
-			index++
-		}
+	for current.data != data {
+		current = current.next
+		index++
 	}
-	if cur != nil {
-		return index
-	} else {
-		return -1
-	}
+	return index
+	//
+	//if index <= l.length {
+	//	return index
+	//} else {
+	//	return 0
+	//}
+
 }
 
 //按值删除
@@ -214,14 +214,19 @@ func main() {
 	mylist.printListData()
 
 	/*
-	ele := mylist.GetElemWithIndex(1)
-	if ele != nil {
-		fmt.Println(ele.data)
-	}
-	*/
-	ele2 := mylist.FindWithData(9)
-	if ele2 != nil {
-		fmt.Println(ele2.data)
-	}
+		ele := mylist.GetElemWithIndex(1)
+		if ele != nil {
+			fmt.Println(ele.data)
+		}
 
+		ele2 := mylist.FindWithData(9)
+		if ele2 != nil {
+			fmt.Println(ele2.data)
+		}
+	*/
+	index := mylist.FindData(7)
+	fmt.Println(index)
+
+	index2 := mylist.FindData(4)
+	fmt.Println(index2)
 }
