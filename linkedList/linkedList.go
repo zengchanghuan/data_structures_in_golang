@@ -59,9 +59,13 @@ func (l *linkedList) Length() int {
 	return l.length
 }
 
-//取单链表中第i个元素
-func (l *linkedList) GetElem(index int) *node {
+//
+func (l *linkedList) GetElemWithIndex(index int) *node {
 	index -= 1
+	if index < 0 {
+		fmt.Println("index is error")
+		return nil
+	}
 	if l.length == 0 || index > l.length {
 		return nil
 	}
@@ -230,6 +234,9 @@ func main() {
 	mylist.InsertBefore(initNode(7))
 	mylist.printListData()
 
-	ele := mylist.GetElem(2)
-	fmt.Println(ele.data)
+	ele := mylist.GetElem(1)
+	if ele != nil {
+		fmt.Println(ele.data)
+	}
+
 }
