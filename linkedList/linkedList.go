@@ -71,21 +71,32 @@ func (l *linkedList) GetElemWithIndex(index int) *node {
 	}
 
 	//从链表头指值出发，顺着链域next逐个往下搜索
-	cur := l.head
+	current := l.head
 	var i = 0
 	for ; i < index; i++ {
-		cur = cur.next
+		current = current.next
 	}
-	return cur
+	return current
 }
 
 //查找，按值查找，根据数据获取该数据所在的地址
-func (l *linkedList) FindByData(data int) *node {
-	if l.length == 0 {
+func (l *linkedList) FindWithData(data int) *node {
+	if l.head == nil || l.length == 0 {
 		return nil
 	}
 
-	cur := l.head.next
+	current := l.head
+	for {
+		if current.data == data {
+			break
+		}
+		if current.next == nil {
+			break
+		}
+		current = current.next
+	}
+	return current
+	/*
 	for {
 		if data != cur.data {
 			cur = cur.next
@@ -93,6 +104,7 @@ func (l *linkedList) FindByData(data int) *node {
 		return cur
 	}
 	return nil
+	*/
 }
 
 //查找，按值查找，根据数据获取该数据所在的位置序号
@@ -114,10 +126,6 @@ func (l *linkedList) FindData(data int) int {
 	} else {
 		return -1
 	}
-}
-
-func (l *linkedList) withinRange(index int) bool {
-	return index >= 0 && index < l.length
 }
 
 //按值删除
@@ -171,35 +179,6 @@ func (l *linkedList) InsertBefore(n *node) {
 	l.length++
 }
 
-//在某一结点前插入一个结点
-//在某一结点前插入一个结点
-func (l *linkedList) InsertBeforeC(p *node) {
-	if l.head == nil || p == nil {
-		return
-	}
-
-	//首元结点
-	cur := l.head.next
-	//头结点
-	pre := l.head
-
-	for cur != nil {
-		if cur == p {
-			break
-		}
-		pre = cur
-		cur = cur.next
-	}
-
-	if cur == nil {
-		return
-	}
-
-	pre.next = p
-	p.next = cur
-	l.length++
-}
-
 //在某个结点后面插入结点
 func (l *linkedList) InsertAfter(p *node, value int) bool {
 	if p == nil {
@@ -234,9 +213,15 @@ func main() {
 	mylist.InsertBefore(initNode(7))
 	mylist.printListData()
 
-	ele := mylist.GetElem(1)
+	/*
+	ele := mylist.GetElemWithIndex(1)
 	if ele != nil {
 		fmt.Println(ele.data)
+	}
+	*/
+	ele2 := mylist.FindWithData(9)
+	if ele2 != nil {
+		fmt.Println(ele2.data)
 	}
 
 }
