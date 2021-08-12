@@ -30,7 +30,7 @@ func (l *linkedList) IsEmpty() bool {
 	//}
 	if l.head.next == nil {
 		return true
-	} else  {
+	} else {
 		return false
 	}
 }
@@ -121,8 +121,9 @@ func (l *linkedList) LocateElem(data int) int {
 		return index
 	}
 }
+
 //在第i个结点前插入一个结点
-func (l *linkedList)InsertBefore(index , value int)  {
+func (l *linkedList) InsertBefore(index, value int) {
 	if l.head == nil || index < 1 {
 		return
 	}
@@ -130,9 +131,9 @@ func (l *linkedList)InsertBefore(index , value int)  {
 	cursor := l.head
 	j := 0
 	//寻找第i-1个结点，cursor指各i-1个结点
-	for cursor != nil && j < index - 1 {
+	for cursor != nil && j < index-1 {
 		j++
-		cursor =  cursor.next
+		cursor = cursor.next
 	}
 	if cursor == nil {
 		return
@@ -143,20 +144,21 @@ func (l *linkedList)InsertBefore(index , value int)  {
 	}
 }
 
-func (l *linkedList)DeleteIndex(i int){
+//删除第i个元素
+func (l *linkedList) DeleteIndex(i int) {
 	if i < 1 {
 		return
 	}
 	pre := l.head
 	j := 0
-	for j < i-1 && pre != nil{
+	for j < i-1 && pre != nil {
 		j++
 		pre = pre.next
 	}
-	if pre == nil{
+	if pre == nil {
 		return
-	}else{
-		if pre.next == nil{
+	} else {
+		if pre.next == nil {
 			return
 		}
 		pre.next = pre.next.next
@@ -185,7 +187,6 @@ func (l *linkedList) DeleteWithValue(value int) {
 	previousToDelete = nil
 	l.length--
 }
-
 
 //删除结点
 func (l *linkedList) DeleteNode(p *node) {
@@ -251,29 +252,32 @@ func main() {
 	mylist.printListData()
 
 	//mylist.InsertBefore(3,54)
-	mylist.DeleteIndex(1)
+	//mylist.DeleteIndex(1)
+	mylist.DeleteWithValue(3)
+	mylist.printListData()
+	mylist.DeleteWithValue(7)
 	mylist.printListData()
 
 	/*
-		ele := mylist.GetElemWithIndex(1)
-		if ele != nil {
-			fmt.Println(ele.data)
-		}
+			ele := mylist.GetElemWithIndex(1)
+			if ele != nil {
+				fmt.Println(ele.data)
+			}
 
-		ele2 := mylist.FindWithData(9)
-		if ele2 != nil {
-			fmt.Println(ele2.data)
-		}
+			ele2 := mylist.FindWithData(9)
+			if ele2 != nil {
+				fmt.Println(ele2.data)
+			}
 
-	index := mylist.FindData(7)
-	fmt.Println(index)
+		index := mylist.FindData(7)
+		fmt.Println(index)
 
 
 
-	index2 := mylist.LocateElem(90)
-	fmt.Println(index2)
-	index3 := mylist.LocateElem(70)
-	fmt.Println(index3)
+		index2 := mylist.LocateElem(90)
+		fmt.Println(index2)
+		index3 := mylist.LocateElem(70)
+		fmt.Println(index3)
 	*/
 
 }
