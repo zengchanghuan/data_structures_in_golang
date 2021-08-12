@@ -23,9 +23,14 @@ func initLinkedList() *linkedList {
 }
 
 func (l *linkedList) IsEmpty() bool {
-	if l.length > 0 {
+	//if l.length > 0 {
+	//	return true
+	//} else {
+	//	return false
+	//}
+	if l.head.next == nil {
 		return true
-	} else {
+	} else  {
 		return false
 	}
 }
@@ -84,18 +89,17 @@ func (l *linkedList) FindWithData(data int) *node {
 		return nil
 	}
 
-	current := l.head
+	cursor := l.head
 	for {
-		if current.data == data {
+		if cursor.data == data {
 			break
 		}
-		if current.next == nil {
+		if cursor.next == nil {
 			break
 		}
-		current = current.next
+		cursor = cursor.next
 	}
-	return current
-
+	return cursor
 }
 
 //查找，按值查找返回位置序号
@@ -103,7 +107,6 @@ func (l *linkedList) LocateElem(data int) int {
 	if l.head == nil || l.length == 0 {
 		return -1
 	}
-
 	cursor := l.head
 	index := 1
 	//如果没有找到，cursor.next 为空，故下面cursor不空判断不可少
@@ -118,10 +121,52 @@ func (l *linkedList) LocateElem(data int) int {
 		return index
 	}
 }
+//在第i个结点前插入一个结点
+func (l *linkedList)InsertBefore(index , value int)  {
+	if l.head == nil || index < 1 {
+		return
+	}
+
+	cursor := l.head
+	j := 0
+	//寻找第i-1个结点，cursor指各i-1个结点
+	for cursor != nil && j < index - 1 {
+		j++
+		cursor =  cursor.next
+	}
+	if cursor == nil {
+		return
+	} else {
+		s := initNode(value)
+		s.next = cursor.next
+		cursor.next = s
+	}
+}
+
+func (l *linkedList)DeleteIndex(i int){
+	if i < 1 {
+		return
+	}
+	pre := l.head
+	j := 0
+	for j < i-1 && pre != nil{
+		j++
+		pre = pre.next
+	}
+	if pre == nil{
+		return
+	}else{
+		if pre.next == nil{
+			return
+		}
+		pre.next = pre.next.next
+		return
+	}
+}
 
 //按值删除
 func (l *linkedList) DeleteWithValue(value int) {
-	if l.length == 0 {
+	if l.head == nil || l.length == 0 {
 		return
 	}
 	if l.head.data == value {
@@ -141,6 +186,7 @@ func (l *linkedList) DeleteWithValue(value int) {
 	l.length--
 }
 
+
 //删除结点
 func (l *linkedList) DeleteNode(p *node) {
 	if l.length == 0 || p == nil {
@@ -159,7 +205,7 @@ func (l *linkedList) DeleteNode(p *node) {
 	l.length--
 }
 
-func (l *linkedList) InsertBefore(n *node) {
+func (l *linkedList) InsertPre(n *node) {
 	if l.head == nil || n == nil {
 		return
 	}
@@ -195,13 +241,17 @@ func (l linkedList) printListData() {
 }
 func main() {
 	mylist := initLinkedList()
-	mylist.InsertBefore(initNode(1))
-	mylist.InsertBefore(initNode(2))
-	mylist.InsertBefore(initNode(3))
-	mylist.InsertBefore(initNode(4))
-	mylist.InsertBefore(initNode(5))
-	mylist.InsertBefore(initNode(6))
-	mylist.InsertBefore(initNode(7))
+	mylist.InsertPre(initNode(1))
+	mylist.InsertPre(initNode(2))
+	mylist.InsertPre(initNode(3))
+	mylist.InsertPre(initNode(4))
+	mylist.InsertPre(initNode(5))
+	mylist.InsertPre(initNode(6))
+	mylist.InsertPre(initNode(7))
+	mylist.printListData()
+
+	//mylist.InsertBefore(3,54)
+	mylist.DeleteIndex(1)
 	mylist.printListData()
 
 	/*
@@ -219,9 +269,11 @@ func main() {
 	fmt.Println(index)
 
 
-	*/
+
 	index2 := mylist.LocateElem(90)
 	fmt.Println(index2)
 	index3 := mylist.LocateElem(70)
 	fmt.Println(index3)
+	*/
+
 }
