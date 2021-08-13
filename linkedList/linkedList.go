@@ -218,18 +218,22 @@ func (l *linkedList) InsertPre(n *node) {
 }
 
 //在某个结点后面插入结点
-func (l *linkedList) InsertAfter(p *node, value int) bool {
-	if p == nil {
-		return false
+func (l *linkedList) InsertAfter(node *node) {
+	if node == nil {
+		return
 	}
-	//1.生成一个新结点且数据域赋值
-	node := initNode(value)
-	old := p.next
-	//新结点插入到尾结点之后
-	p.next = node
-	node.next = old
+	if l.length == 0 {
+		l.head = node
+	} else {
+		//取出头部结点
+		cur := l.head
+		//判断是否有下一个结点
+		for cur.next != nil {
+			cur = cur.next
+		}
+		cur.next = node
+	}
 	l.length++
-	return true
 }
 func (l linkedList) printListData() {
 	toPrint := l.head
@@ -242,27 +246,28 @@ func (l linkedList) printListData() {
 }
 func main() {
 	mylist := initLinkedList()
-	mylist.InsertPre(initNode(1))
-	mylist.InsertPre(initNode(2))
-	mylist.InsertPre(initNode(3))
-	mylist.InsertPre(initNode(4))
-	mylist.InsertPre(initNode(5))
-	mylist.InsertPre(initNode(6))
-	mylist.InsertPre(initNode(7))
+	mylist.InsertAfter(initNode(1))
+	mylist.InsertAfter(initNode(2))
+	mylist.InsertAfter(initNode(3))
+	mylist.InsertAfter(initNode(4))
+	mylist.InsertAfter(initNode(5))
+	mylist.InsertAfter(initNode(6))
+	mylist.InsertAfter(initNode(7))
 	mylist.printListData()
 
+	fmt.Println(mylist.GetElemWithIndex(1))
 	//mylist.InsertBefore(3,54)
 	//mylist.DeleteIndex(1)
 	//mylist.DeleteWithValue(3)
-	mylist.printListData()
+	//mylist.printListData()
 	//mylist.DeleteWithValue(7)
-	mylist.printListData()
-
+	//mylist.printListData()
+	/*
 	d := mylist.GetElemWithIndex(3)
 	mylist.DeleteNode(d)
 	mylist.printListData()
 
-	/*
+
 			ele := mylist.GetElemWithIndex(1)
 			if ele != nil {
 				fmt.Println(ele.data)
