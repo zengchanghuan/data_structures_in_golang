@@ -13,9 +13,17 @@ type doublyLinkedList struct {
 	head *node
 	length int
 }
-
+func (n *node)Next() *node  {
+	return n.next
+}
+func (n *node)Prev() *node  {
+	return n.prev
+}
 func initDoublyList() *doublyLinkedList  {
 	return &doublyLinkedList{}
+}
+func (l *doublyLinkedList)First() *node  {
+	return l.head
 }
 
 func (d *doublyLinkedList) AddFrontNode(value int)  {
@@ -61,8 +69,6 @@ func (d *doublyLinkedList)TraverseForward()error  {
 	temp := d.head
 	for temp != nil {
 		fmt.Printf("value = %v, prev = %v, next = %v\n", temp.data, temp.data, temp.next)
-		fmt.Printf("value = %v, prev = %v, next = %v\n", temp.data, temp.data, temp.next)
-
 		temp = temp.next
 	}
 	fmt.Println()
@@ -84,17 +90,31 @@ func (d *doublyLinkedList) TraverseReverse() error {
 func (d *doublyLinkedList)Size()int  {
 	return d.length
 }
+
+func (d *doublyLinkedList)Find(value int) *node  {
+	found := false
+	var ret *node = nil
+	for n := d.First();n != nil && !found; n = n.Next() {
+		if n.data == value {
+			found = true
+			ret = n
+		}
+	}
+	return ret
+}
 func main()  {
 	doublyList := initDoublyList()
 	doublyList.AddEndNode(1)
 	doublyList.AddEndNode(2)
 	doublyList.AddEndNode(3)
-	doublyList.AddEndNode(4)
+	doublyList.AddEndNode(88)
 	doublyList.AddEndNode(5)
 	doublyList.AddEndNode(6)
 	doublyList.AddEndNode(7)
-	doublyList.TraverseForward()
-	doublyList.TraverseReverse()
-	doublyList.TraverseForward()
+	//fmt.Println(doublyList.TraverseForward())
+	ret := doublyList.Find(88)
+	fmt.Println(ret.prev.data,ret.next.data)
+	//doublyList.TraverseReverse()
+	//doublyList.TraverseForward()
 
 }
