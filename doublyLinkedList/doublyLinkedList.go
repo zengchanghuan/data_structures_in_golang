@@ -102,6 +102,22 @@ func (d *doublyLinkedList)Find(value int) *node  {
 	}
 	return ret
 }
+
+func (d *doublyLinkedList)Delete(value int)bool  {
+	success := false
+	deleteNode := d.Find(value)
+	if deleteNode != nil {
+		fmt.Println("Delete - FOUND: ", value)
+		preNode := deleteNode.prev
+		nextNode := deleteNode.next
+
+		//remove this node
+		preNode.next = deleteNode.next
+		nextNode.prev = deleteNode.prev
+		success = true
+	}
+	return success
+}
 func main()  {
 	doublyList := initDoublyList()
 	doublyList.AddEndNode(1)
@@ -112,9 +128,12 @@ func main()  {
 	doublyList.AddEndNode(6)
 	doublyList.AddEndNode(7)
 	//fmt.Println(doublyList.TraverseForward())
-	ret := doublyList.Find(88)
-	fmt.Println(ret.prev.data,ret.next.data)
+	//ret := doublyList.Find(88)
+	//fmt.Println(ret.prev.data,ret.next.data)
 	//doublyList.TraverseReverse()
 	//doublyList.TraverseForward()
+
+	fmt.Println(doublyList.Delete(88))
+	doublyList.TraverseForward()
 
 }
