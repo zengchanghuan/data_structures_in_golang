@@ -32,7 +32,7 @@ func (q *Queue) Enqueue(data int) {
 	}
 
 	q.tail.next = node
-	q.tail = q.tail.next
+	q.tail = node
 	q.len++
 }
 
@@ -82,23 +82,36 @@ func (q *Queue)GetHead()int  {
 	return -1
 }
 
+func (q *Queue)Clear()  {
+	if q.IsEmpty() {
+		fmt.Println("queue is empty")
+	}
+
+	q.head.next = nil
+	q.tail.next = nil
+	q.len = 0
+}
+
+
 func main() {
 	q := InitQueue()
 	q.Enqueue(1)
 	q.Enqueue(2)
 	q.Enqueue(3)
-	q.Enqueue(4)
-	q.Enqueue(5)
-	q.Enqueue(6)
-	q.Enqueue(7)
-	q.Enqueue(8)
+
 	//fmt.Println(q.Length())
 	q.Print()
 	//fmt.Println(q.Length())
+	//fmt.Println(q.GetHead())
+	//q.Dequeue()
 	fmt.Println(q.GetHead())
-	q.Dequeue()
-	fmt.Println(q.GetHead())
-	q.Print()
+	q.Clear()
+	fmt.Println(q.IsEmpty())
+	fmt.Println(q.Length())
+	//q.Dequeue()
+	//fmt.Println(q.GetHead())
+
+	//q.Print()
 	//fmt.Println(q.Length())
 
 	//q.Dequeue()
