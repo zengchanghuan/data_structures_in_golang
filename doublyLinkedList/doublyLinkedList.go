@@ -1,7 +1,10 @@
 package main
 
 import "fmt"
-
+/*
+https://golangbyexample.com/doubly-linked-list-golang/
+https://github.com/l3x/golang-code-examples/blob/master/doubly-linked-list.go#L23
+*/
 type node struct {
 	data int
 	next *node
