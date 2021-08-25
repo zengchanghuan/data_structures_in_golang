@@ -159,6 +159,39 @@ func (b *BinarySearchTree) Delete(data int) {
 	}
 }
 
+//求树的深度
+func (t *BinarySearchTree) Depth() int  {
+	var m,n int
+	if t.IsEmpty() {
+		return -1
+	}
+	if t.left != nil {
+		m = t.left.Depth()
+
+	}
+
+	if t.right != nil {
+		n = t.right.Depth()
+	}
+	if m > n {
+		return m + 1
+	} else {
+		return n + 1
+	}
+}
+func (t *BinarySearchTree) LeafCount() int {
+	if t == nil {
+		return 0
+	}
+	res := 1
+	if t.right != nil {
+		res += t.right.LeafCount()
+	}
+	if t.left != nil {
+		res += t.left.LeafCount()
+	}
+	return res
+}
 // MidOrderTraversalRecursion 递归中序遍历.
 // 先遍历左子树，然后遍历根节点，再遍历右子树.
 func (b *BinarySearchTree) MidOrderTraversalRecursion() {
@@ -196,10 +229,10 @@ func main()  {
 	t.Insert(33)
 	t.Insert(534)
 	t.Insert(313)
-	t.Insert(45)
-	t.Insert(5353)
-	t.Delete(534)
-	fmt.Println(t.FindMin())
-	//t.PreOrderTraversalRecursion()
-
+	t.Insert(3323)
+	t.Insert(54334)
+	t.Insert(31643)
+	//fmt.Println(t.FindMin())
+	//t.MidOrderTraversalRecursion()
+	fmt.Println(t.LeafCount())
 }
