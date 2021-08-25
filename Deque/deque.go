@@ -2,12 +2,12 @@ package main
 
 import "fmt"
 
+//double ended queue
 type MyCircularDeque struct {
 	queue []int
 	head int
 	tail int
 }
-
 func InitDeque(k int) MyCircularDeque  {
 	return MyCircularDeque{
 		queue: make([]int,k + 1),
@@ -15,7 +15,6 @@ func InitDeque(k int) MyCircularDeque  {
 		tail: 0,
 	}
 }
-
 /*
 头进 头部进队，先将this.head前移一位，然后将元素先放入this.head位置
 队头前移一位即this.head - 1
