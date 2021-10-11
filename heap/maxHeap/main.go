@@ -47,7 +47,7 @@ func (m *maxHeap) rightchild(index int) int {
 
 func (m *maxHeap) insert(item int) error {
 	if m.size >= m.maxSize {
-		return fmt.Errorf("Heal is ful")
+		return fmt.Errorf("heap is full")
 	}
 	m.heapArray = append(m.heapArray, item)
 	m.size++
@@ -88,7 +88,7 @@ func (m *maxHeap) downHeapify(current int) {
 }
 
 func (m *maxHeap) buildMaxHeap() {
-	for index := ((m.size / 2) - 1); index >= 0; index-- {
+	for index := (m.size / 2) - 1; index >= 0; index-- {
 		m.downHeapify(index)
 	}
 }
@@ -102,7 +102,7 @@ func (m *maxHeap) remove() int {
 	return top
 }
 func main() {
-	inputArray := []int{6, 5, 3, 7, 2, 8}
+	inputArray := []int{6, 5, 3, 7, 2, 8,0,-2}
 	maxHeap := newMaxHeap(len(inputArray))
 	for i := 0; i < len(inputArray); i++ {
 		maxHeap.insert(inputArray[i])
