@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-//ArraySize is the size of the hash table arrya
+//ArraySize is the size of the hash table array
 const ArraySize = 7
 
 //HashTable will hold an array
@@ -50,7 +50,7 @@ func (b *bucket) insert(k string) {
 	}
 }
 
-//search will take in a key and reture true if the bucket has that key
+//search will take in a key and return true if the bucket has that key
 func (b *bucket) search(k string) bool {
 	currentNode := b.head
 	for currentNode != nil {
