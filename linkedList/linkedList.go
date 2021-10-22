@@ -1,9 +1,10 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
+/*
+单链表的基本操作：初始化，创建，取值，查找，插入，删除
+*/
 type node struct {
 	data int
 	next *node
@@ -23,11 +24,6 @@ func initLinkedList() *linkedList {
 }
 
 func (l *linkedList) IsEmpty() bool {
-	//if l.length > 0 {
-	//	return true
-	//} else {
-	//	return false
-	//}
 	if l.head.next == nil {
 		return true
 	} else {
@@ -35,6 +31,13 @@ func (l *linkedList) IsEmpty() bool {
 	}
 }
 
+func (l *linkedList) Last() *node  {
+	h := l.head
+	for h != nil && h.next != nil {
+		h = h.next
+	}
+	return h
+}
 //清空链表数据，链表仍存在
 func (l *linkedList) clear() {
 	if l.head == nil {
@@ -42,16 +45,15 @@ func (l *linkedList) clear() {
 	}
 	l.head.next = nil
 	l.length = 0
-
 }
 
 //销毁链表 整张表都不存在
 func (l *linkedList) Destroy() {
 	if l.head == nil {
-		return
+		l.head = &node{0,nil}
 	}
 	l.length = 0
-	l.head = nil
+	l.head.next = nil
 
 }
 
@@ -63,24 +65,23 @@ func (l *linkedList) Length() int {
 	return l.length
 }
 
-//
-func (l *linkedList) GetElemWithIndex(index int) *node {
-	index -= 1
-	if index < 0 {
-		fmt.Println("index is error")
-		return nil
+//查找，按值查找返回位置序号
+func (l *linkedList) LocateElem(data int) int {
+	if l.head == nil || l.length == 0 {
+		return -1
 	}
-	if l.length == 0 || index > l.length {
-		return nil
-	}
-
-	//从链表头指值出发，顺着链域next逐个往下搜索
 	cursor := l.head
-	var i = 0
-	for ; i < index; i++ {
+	index := 1
+	//如果没有找到，cursor.next 为空，故下面cursor为空判断不可少
+	for cursor != nil && cursor.data != data {
 		cursor = cursor.next
+		index++
 	}
-	return cursor
+	if cursor == nil {
+		return -1
+	} else {
+		return index
+	}
 }
 
 //查找，按值查找，根据数据获取该数据所在的地址
@@ -101,25 +102,24 @@ func (l *linkedList) FindWithData(data int) *node {
 	}
 	return cursor
 }
-
-//查找，按值查找返回位置序号
-func (l *linkedList) LocateElem(data int) int {
-	if l.head == nil || l.length == 0 {
-		return -1
+//查找，按位查找 返回地址
+func (l *linkedList) GetElemWithIndex(index int) *node {
+	//要不要都行，从0开始取可以不要
+	//index -= 1
+	if index < 0 {
+		fmt.Println("index is error")
+		return nil
 	}
+	if l.length == 0 || index > l.length {
+		return nil
+	}
+
+	//从链表头指值出发，顺着链域next逐个往下搜索
 	cursor := l.head
-	index := 1
-	//如果没有找到，cursor.next 为空，故下面cursor不空判断不可少
-	for cursor != nil && cursor.data != data {
+	for i:= 0; i < index; i++ {
 		cursor = cursor.next
-		index++
 	}
-
-	if cursor == nil {
-		return -1
-	} else {
-		return index
-	}
+	return cursor
 }
 
 //在第i个结点前插入一个结点
@@ -128,22 +128,65 @@ func (l *linkedList) InsertBefore(index, value int) {
 		return
 	}
 
-	cursor := l.head
+	L := l.head
 	j := 0
-	//寻找第i-1个结点，cursor指各i-1个结点
-	for cursor != nil && j < index-1 {
+	//寻找第i-1个结点，cursor指向i-1个结点
+	for L != nil && j < index-1 {
 		j++
-		cursor = cursor.next
+		L = L.next
 	}
-	if cursor == nil {
+	if L == nil {
 		return
 	} else {
 		s := initNode(value)
-		s.next = cursor.next
-		cursor.next = s
+		//以下两行是关键代码 新结点的下一个结点存储是头结点，实现头插法的关键代码
+		s.next = L.next
+		//设置新的头结点，实现下一步头插法
+		L.next = s
 	}
 }
+//头插法 逆序建表
 
+func (l *linkedList) InsertPre(s *node) {
+	if l.head == nil || s == nil {
+		return
+	}
+
+	second := l.head
+	l.head = s
+	l.head.next = second
+	l.length++
+}
+/*
+func (l *linkedList) InsertPre(s *node) {
+	if l.head == nil || s == nil {
+		return
+	}
+
+	second := l.head
+	l.head = s
+	l.head.next = second
+	l.length++
+}
+*/
+//尾插法 正序建表
+func (l *linkedList) InsertAfter(node *node) {
+	if node == nil {
+		return
+	}
+	if l.length == 0 {
+		l.head = node
+	} else {
+		//取出头部结点
+		L := l.head
+		//判断是否有下一个结点
+		for L.next != nil {
+			L = L.next
+		}
+		L.next = node
+	}
+	l.length++
+}
 //删除第i个元素
 func (l *linkedList) DeleteIndex(i int) {
 	if i < 1 {
@@ -206,35 +249,6 @@ func (l *linkedList) DeleteNode(p *node) {
 	l.length--
 }
 
-func (l *linkedList) InsertPre(n *node) {
-	if l.head == nil || n == nil {
-		return
-	}
-
-	second := l.head
-	l.head = n
-	l.head.next = second
-	l.length++
-}
-
-//在某个结点后面插入结点
-func (l *linkedList) InsertAfter(node *node) {
-	if node == nil {
-		return
-	}
-	if l.length == 0 {
-		l.head = node
-	} else {
-		//取出头部结点
-		cur := l.head
-		//判断是否有下一个结点
-		for cur.next != nil {
-			cur = cur.next
-		}
-		cur.next = node
-	}
-	l.length++
-}
 func (l linkedList) printListData() {
 	toPrint := l.head
 	for l.length != 0 {
@@ -246,16 +260,17 @@ func (l linkedList) printListData() {
 }
 func main() {
 	mylist := initLinkedList()
-	mylist.InsertAfter(initNode(1))
-	mylist.InsertAfter(initNode(2))
-	mylist.InsertAfter(initNode(3))
-	mylist.InsertAfter(initNode(4))
-	mylist.InsertAfter(initNode(5))
-	mylist.InsertAfter(initNode(6))
-	mylist.InsertAfter(initNode(7))
+	mylist.InsertPre(initNode(4))
+	mylist.InsertPre(initNode(242))
+	mylist.InsertPre(initNode(3242))
+	mylist.InsertPre(initNode(4))
+	mylist.InsertPre(initNode(523))
+	mylist.InsertPre(initNode(653))
+	mylist.InsertPre(initNode(753))
 	mylist.printListData()
 
-	fmt.Println(mylist.GetElemWithIndex(1))
+	//fmt.Println(mylist.GetElemWithIndex(4))
+	fmt.Println(mylist.LocateElem(523))
 	//mylist.InsertBefore(3,54)
 	//mylist.DeleteIndex(1)
 	//mylist.DeleteWithValue(3)
