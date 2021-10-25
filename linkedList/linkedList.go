@@ -146,29 +146,24 @@ func (l *linkedList) InsertBefore(index, value int) {
 	}
 }
 //头插法 逆序建表
-
-func (l *linkedList) InsertPre(s *node) {
-	if l.head == nil || s == nil {
+func (l *linkedList) InsertPre(n *node) {
+	if l.head == nil || n == nil {
 		return
 	}
 
+	//以下两种写法二选一，第一种好理解，第二种更简洁
+	/*
 	second := l.head
-	l.head = s
+	l.head = n
 	l.head.next = second
 	l.length++
-}
-/*
-func (l *linkedList) InsertPre(s *node) {
-	if l.head == nil || s == nil {
-		return
-	}
+	*/
+	n.next = l.head
+	l.head = n
+	l.length++
 
-	second := l.head
-	l.head = s
-	l.head.next = second
-	l.length++
 }
-*/
+
 //尾插法 正序建表
 func (l *linkedList) InsertAfter(node *node) {
 	if node == nil {
@@ -260,17 +255,31 @@ func (l linkedList) printListData() {
 }
 func main() {
 	mylist := initLinkedList()
+	mylist.InsertPre(initNode(1))
+	mylist.InsertPre(initNode(2))
+	mylist.InsertPre(initNode(3))
 	mylist.InsertPre(initNode(4))
-	mylist.InsertPre(initNode(242))
-	mylist.InsertPre(initNode(3242))
-	mylist.InsertPre(initNode(4))
-	mylist.InsertPre(initNode(523))
-	mylist.InsertPre(initNode(653))
-	mylist.InsertPre(initNode(753))
+	mylist.InsertPre(initNode(5))
+	mylist.InsertPre(initNode(6))
+	mylist.InsertPre(initNode(7))
 	mylist.printListData()
+	fmt.Println(mylist.LocateElem(523))
+
+
+	mylist2 := initLinkedList()
+	mylist2.InsertAfter(initNode(1))
+	mylist2.InsertAfter(initNode(2))
+	mylist2.InsertAfter(initNode(3))
+	mylist2.InsertAfter(initNode(4))
+	mylist2.InsertAfter(initNode(5))
+	mylist2.InsertAfter(initNode(6))
+	mylist2.InsertAfter(initNode(7))
+	mylist2.printListData()
 
 	//fmt.Println(mylist.GetElemWithIndex(4))
-	fmt.Println(mylist.LocateElem(523))
+	fmt.Println(mylist2.LocateElem(523))
+
+
 	//mylist.InsertBefore(3,54)
 	//mylist.DeleteIndex(1)
 	//mylist.DeleteWithValue(3)
