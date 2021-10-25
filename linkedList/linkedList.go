@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /*
 单链表的基本操作：初始化，创建，取值，查找，插入，删除
@@ -24,19 +26,21 @@ func initLinkedList() *linkedList {
 }
 
 func (l *linkedList) IsEmpty() bool {
-	if l.head.next == nil {
+
+	if l.head == nil || l.length == 0 {
 		return true
 	} else {
 		return false
 	}
+
 }
 
 func (l *linkedList) Last() *node  {
-	h := l.head
-	for h != nil && h.next != nil {
-		h = h.next
+	cur := l.head
+	for cur != nil && cur.next != nil {
+		cur = cur.next
 	}
-	return h
+	return cur
 }
 //清空链表数据，链表仍存在
 func (l *linkedList) clear() {
@@ -54,7 +58,6 @@ func (l *linkedList) Destroy() {
 	}
 	l.length = 0
 	l.head.next = nil
-
 }
 
 //表长
@@ -127,7 +130,6 @@ func (l *linkedList) InsertBefore(index, value int) {
 	if l.head == nil || index < 1 {
 		return
 	}
-
 	L := l.head
 	j := 0
 	//寻找第i-1个结点，cursor指向i-1个结点
@@ -150,7 +152,6 @@ func (l *linkedList) InsertPre(n *node) {
 	if l.head == nil || n == nil {
 		return
 	}
-
 	//以下两种写法二选一，第一种好理解，第二种更简洁
 	/*
 	second := l.head
@@ -158,27 +159,48 @@ func (l *linkedList) InsertPre(n *node) {
 	l.head.next = second
 	l.length++
 	*/
+
+	//将l的值赋值给新结点的next域
 	n.next = l.head
+	//将新结点接在头结点的后面
 	l.head = n
+
+
 	l.length++
+
 
 }
 
-//尾插法 正序建表
+//尾插法 正序建表 两种写法，第一种更简洁
 func (l *linkedList) InsertAfter(node *node) {
+	if node == nil {
+		return
+	}
+	if l.IsEmpty() {
+		l.head = node
+	} else {
+		l.Last().next = node
+
+	}
+	l.length++
+}
+func (l *linkedList) InsertAfter2(node *node) {
 	if node == nil {
 		return
 	}
 	if l.length == 0 {
 		l.head = node
 	} else {
+
 		//取出头部结点
-		L := l.head
-		//判断是否有下一个结点
-		for L.next != nil {
-			L = L.next
+		cur := l.head
+		//判断是否有下一个结点 当前结点后面一直有值
+		for cur.next != nil {
+			cur = cur.next
 		}
-		L.next = node
+		cur.next = node
+		l.Last().next = node
+
 	}
 	l.length++
 }
@@ -254,6 +276,7 @@ func (l linkedList) printListData() {
 	fmt.Printf("\n")
 }
 func main() {
+	/*
 	mylist := initLinkedList()
 	mylist.InsertPre(initNode(1))
 	mylist.InsertPre(initNode(2))
@@ -264,7 +287,7 @@ func main() {
 	mylist.InsertPre(initNode(7))
 	mylist.printListData()
 	fmt.Println(mylist.LocateElem(523))
-
+    */
 
 	mylist2 := initLinkedList()
 	mylist2.InsertAfter(initNode(1))
@@ -275,7 +298,8 @@ func main() {
 	mylist2.InsertAfter(initNode(6))
 	mylist2.InsertAfter(initNode(7))
 	mylist2.printListData()
-
+	mylist2.DeleteIndex(3)
+	mylist2.printListData()
 	//fmt.Println(mylist.GetElemWithIndex(4))
 	fmt.Println(mylist2.LocateElem(523))
 
