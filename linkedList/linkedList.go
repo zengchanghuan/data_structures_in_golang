@@ -205,25 +205,21 @@ func (l *linkedList) InsertAfter2(node *node) {
 	l.length++
 }
 //删除第i个元素
-func (l *linkedList) DeleteIndex(i int) {
-	if i < 1 {
+func (l *linkedList) DeleteIndex (pos int) {
+	if pos < 0 || pos > l.length {
+		fmt.Println("index out of bounds")
 		return
 	}
-	pre := l.head
+	cur := l.head
 	j := 0
-	for j < i-1 && pre != nil {
+	for j < pos - 1 {
 		j++
-		pre = pre.next
+		cur = cur.next
 	}
-	if pre == nil {
-		return
-	} else {
-		if pre.next == nil {
-			return
-		}
-		pre.next = pre.next.next
-		return
-	}
+	//临时保存被删结点
+	remove := cur.next
+	cur.next = remove.next
+	l.length--
 }
 
 //按值删除
@@ -267,13 +263,26 @@ func (l *linkedList) DeleteNode(p *node) {
 }
 
 func (l linkedList) printListData() {
+	if l.length == 0 {
+		fmt.Println("No nodes in list")
+	}
+	ptr := l.head
+	for i := 0; i < l.length; i++ {
+		//fmt.Printf("Node: ", ptr)
+		fmt.Printf("%d ->", ptr.data)
+
+		ptr = ptr.next
+	}
+	/*
 	toPrint := l.head
 	for l.length != 0 {
 		fmt.Printf("%d ->", toPrint.data)
 		toPrint = toPrint.next
 		l.length--
 	}
+	*/
 	fmt.Printf("\n")
+
 }
 func main() {
 	/*
@@ -297,6 +306,9 @@ func main() {
 	mylist2.InsertAfter(initNode(5))
 	mylist2.InsertAfter(initNode(6))
 	mylist2.InsertAfter(initNode(7))
+
+	testNode := initNode(332)
+	mylist2.InsertAfter(testNode)
 	mylist2.printListData()
 	mylist2.DeleteIndex(3)
 	mylist2.printListData()
