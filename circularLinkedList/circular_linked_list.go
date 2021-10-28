@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+//循环链表
 type Ring struct {
 	data       int
 	next, prev *Ring

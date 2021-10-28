@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 /*
+双向链表
 https://golangbyexample.com/doubly-linked-list-golang/
 https://github.com/l3x/golang-code-examples/blob/master/doubly-linked-list.go#L23
 */
@@ -12,23 +13,28 @@ type node struct {
 }
 
 type doublyLinkedList struct {
-	tail *node
 	head *node
+	tail *node
 	length int
 }
-func (n *node)Next() *node  {
+func (n *node) Next() *node  {
 	return n.next
 }
-func (n *node)Prev() *node  {
+func (n *node) Prev() *node  {
 	return n.prev
 }
 func initDoublyList() *doublyLinkedList  {
 	return &doublyLinkedList{}
 }
-func (l *doublyLinkedList)First() *node  {
+func (l *doublyLinkedList) First() *node  {
 	return l.head
 }
 
+func (l *doublyLinkedList) Last() *node  {
+	return l.tail
+}
+
+//头插法
 func (d *doublyLinkedList) AddFrontNode(value int)  {
 	newData := &node{
 		data: value,
@@ -123,20 +129,20 @@ func (d *doublyLinkedList)Delete(value int)bool  {
 }
 func main()  {
 	doublyList := initDoublyList()
-	doublyList.AddEndNode(1)
-	doublyList.AddEndNode(2)
-	doublyList.AddEndNode(3)
-	doublyList.AddEndNode(88)
-	doublyList.AddEndNode(5)
-	doublyList.AddEndNode(6)
-	doublyList.AddEndNode(7)
+	doublyList.AddFrontNode(1)
+	doublyList.AddFrontNode(2)
+	doublyList.AddFrontNode(3)
+	doublyList.AddFrontNode(4)
+	doublyList.AddFrontNode(5)
+	doublyList.AddFrontNode(6)
+	doublyList.AddFrontNode(7)
 	//fmt.Println(doublyList.TraverseForward())
 	//ret := doublyList.Find(88)
 	//fmt.Println(ret.prev.data,ret.next.data)
 	//doublyList.TraverseReverse()
 	//doublyList.TraverseForward()
 
-	fmt.Println(doublyList.Delete(88))
-	doublyList.TraverseForward()
+	//fmt.Println(doublyList.Delete(88))
+	doublyList.TraverseReverse()
 
 }
