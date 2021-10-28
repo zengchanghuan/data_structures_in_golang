@@ -57,10 +57,10 @@ func (array *Array)checkIsFull()  {
 		//开辟双倍内存
 		newDataStore := make([]interface{},2 * array.TheSize,2 * array.TheSize)
 		//拷贝
-		//copy(newDataStore,array.dataStore)
-		for i := 0; i < len(array.dataStore) - 1; i++ {
-			newDataStore[i] = array.dataStore[i]
-		}
+		copy(newDataStore,array.dataStore)
+		//for i := 0; i < len(array.dataStore); i++ {
+		//	newDataStore[i] = array.dataStore[i]
+		//}
 		//赋值
 		array.dataStore = newDataStore
 		fmt.Println(array.dataStore)
