@@ -1,5 +1,4 @@
-package array
-
+package main
 
 import (
 	"errors"
@@ -131,4 +130,13 @@ func (array *Array) Delete(index int)error  {
 	array.TheSize--
 	return nil
 }
-
+func main()  {
+	array := NewArray()
+	array.Append("a")
+	array.Append("b")
+	array.Append("c")
+    for i := 0; i < 15; i++ {
+		array.Insert(1,"x")
+	}
+	fmt.Println(array)
+}
